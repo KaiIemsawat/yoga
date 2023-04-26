@@ -10,4 +10,5 @@ import com.mvc.yogaCourse.models.Course;
 @Repository
 public interface CourseRepo extends CrudRepository<Course, Long>{
 	List<Course> findAll();
+	public List<Course> findAllByUserIdNot(Long id);
 }

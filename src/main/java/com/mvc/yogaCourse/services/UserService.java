@@ -1,5 +1,6 @@
 package com.mvc.yogaCourse.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -60,6 +61,10 @@ public class UserService {
 			return null; // Can't return the user - Invalid log in
 		}
 		return thisUser;
+	}
+	
+	public List<User> getAllUsers() {
+		return userRepo.findAll();
 	}
 	
 	public User findUserById(Long id) {

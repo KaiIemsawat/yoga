@@ -19,8 +19,8 @@
 	<link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-	<div class="container">
-		<h1>Namaste, ${instructor.userName}</h1>
+	<div class="mainContainer">
+		<h1>Namaste, ${loggeredUser.userName}</h1>
 		<h3>Course Schedule</h3>
 		<table class="dojotable">
 			<thead>
@@ -32,23 +32,25 @@
 				<th>Time</th>
 			</tr>
 			</thead>
-			<%-- <tbody>
+			<tbody>
 				<c:forEach var="c" items="${courses}">
-					<c:choose>
-						<c:when test="${c.users.id == users.id}">
-							<tr>
-								<td>${c.courseName}</td>							
-								<td>${c.users.userName}</td>							
-								<td>${c.dayOfWeek}</td>							
-								<td><span>$</span>${c.price}</td>							
-								<td>${c.time}</td>							
-							</tr>
-						</c:when>
-					</c:choose>						 
+							<tr>																		
+								<td><a href="/course/${c.id}">${c.courseName}</a>
+									<c:if test="${loggeredUser.userName == c.instructorName}">
+										<a href="/course/${c.id}/edit" class="btn btn-warning">Edit</a>
+									</c:if>
+								</td>													
+								<td>${c.instructorName}</td>													
+								<td>${c.dayOfWeek}</td>													
+								<td><span>$</span>${c.price}</td>													
+								<td>${c.time}</td>													
+							</tr>	 
 				</c:forEach>
-			</tbody> --%>
+			</tbody>
 		</table>
 		<a href="course/new" class="btn btn-primary">+ New Course</a>
+		<!-- <a href="courses/all" class="btn btn-primary">See Courses</a> -->
+		<a href="/logout" class="btn btn-secondary">Log out</a>
 	</div>
 
 </body>

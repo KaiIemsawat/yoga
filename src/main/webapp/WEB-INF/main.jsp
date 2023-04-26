@@ -17,33 +17,35 @@
 	<title>Register/Login Page</title>
 	<!-- Bootstrap Link -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+	<!-- YOUR own local CSS -->
+	<link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid mainContainer">
 		<h1>Coourse Platform - Instructors</h1>
 		<div class="row">
 			<div class="col">
 				<p class="fs-3">New Instructor</p>
-				<form:form action="/register" method="POST" modelAttribute="registerUser">
+				<form:form action="/register" method="POST" modelAttribute="registerUser" class="form-group">
 					<div class="row my-4">
-						<form:label path="userName" class="cal-3">Name :</form:label>
+						<form:label path="userName">Name :</form:label>
 						<form:errors path="userName" class="text-danger"></form:errors>
-						<form:input  path="userName"/>
+						<form:input  path="userName" class="form-control self-input-class"/>
 					</div>
 					<div class="row my-4">
 						<form:label path="email" class="cal-3">Email :</form:label>
 						<form:errors path="email" class="text-danger"></form:errors>
-						<form:input  path="email" type="email"/>
+						<form:input  path="email" type="email"  class="form-control self-input-class"/>
 					</div>
 					<div class="row my-4">
 						<form:label path="password" class="cal-3">Password :</form:label>
 						<form:errors path="password" class="text-danger"></form:errors>
-						<form:input  path="password" type="password"/>
+						<form:input  path="password" type="password"  class="form-control self-input-class"/>
 					</div>
 					<div class="row my-4">
 						<form:label path="confirm" class="cal-3">Confirm Password :</form:label>
 						<form:errors path="confirm" class="text-danger"></form:errors>
-						<form:input  path="confirm" type="password"></form:input>
+						<form:input  path="confirm" type="password"  class="form-control self-input-class"></form:input>
 					</div>
 					<input type="submit" value="Register" class="btn btn-primary"/>
 				</form:form>
@@ -54,12 +56,12 @@
 					<div class="row my-4">
 						<form:label path="logEmail">Email : </form:label>
 						<form:errors path="logEmail" class="col-8 text-danger"/>
-						<form:input path="logEmail" type="email" />
+						<form:input path="logEmail" type="email" class="form-control self-input-class"/>
 					</div>
 					<div class="row my-4">
 						<form:label path="logPassword">Password : </form:label>
 						<form:errors path="logPassword" class="col-8 text-danger"/>
-						<form:input path="logPassword" type="password"/>
+						<form:input path="logPassword" type="password"  class="form-control self-input-class"/>
 					</div>
 				
 					<input type="submit" value="Login" class="btn btn-primary"/>

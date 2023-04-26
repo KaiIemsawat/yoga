@@ -1,5 +1,7 @@
 package com.mvc.yogaCourse.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -9,9 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.mvc.yogaCourse.models.Course;
 import com.mvc.yogaCourse.models.LogUser;
 import com.mvc.yogaCourse.models.User;
 import com.mvc.yogaCourse.services.CourseService;
@@ -22,6 +24,8 @@ public class MainController {
 
 	@Autowired private UserService uServ;
 	@Autowired private CourseService cServ;
+	
+	public Object temp;
 	
 	/* ---- Render Login page ----*/
 	@GetMapping("/")
@@ -63,28 +67,27 @@ public class MainController {
 			return "main";
 		}
 		session.setAttribute("userId", foundUser.getId());
+		session.setAttribute("userName", foundUser.getUserName());
+		System.out.println(foundUser.getId()); // <-- Note-------------
 		return "redirect:/courses";
 	}
 	
 
-	/* ---- Render Dashboard page ----*/
+	/* ---- Render Courses page ----*/
 	@GetMapping("/courses")
-	public String dashBoardPage(HttpSession session, Model model) {
+	public String dashBoardPage(
+			HttpSession session, Model model
+			) {
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/"; // <-- send back to Login page
 		}
 		Long userId = (Long) session.getAttribute("userId");
 		model.addAttribute("loggeredUser", uServ.findUserById(userId));
+//		System.out.println(uServ.findUserById(userId)); // <-- Note-------------
+		model.addAttribute("courses", cServ.getAllCourses());
 		return "courses";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	/* ---- Process logout ----*/
 	@GetMapping("/logout")

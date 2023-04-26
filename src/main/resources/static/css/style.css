@@ -1,0 +1,36 @@
+*{
+	margin: 0;
+	border: 0;
+}
+
+.mainContainer {
+	margin: 25px auto;
+	width: 80%; 
+}
+
+.self-input-class {
+	width: 75%;
+}
+
+
+/* Courses page */
+table {
+	border: 2px solid #222222;
+	width: 80%;
+	margin: 25px 12px;
+}
+
+th {
+	background-color: #aaaaaa
+}
+
+
+td, th {
+	padding: 3px 15px;
+	text-align: left;
+	border-right: 2px solid #222222;
+}
+
+tr:nth-child(odd) {
+	background-color: #dddddd;
+}

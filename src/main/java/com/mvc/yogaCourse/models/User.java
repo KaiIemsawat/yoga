@@ -9,9 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -66,18 +64,26 @@ public class User {
 	}
   
 	/*------ DB Setup ------*/
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "user_course",
-		joinColumns = @JoinColumn(name="user_id"),
-		inverseJoinColumns = @JoinColumn(name="course_id")
-	)
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Course> courses;
+
 	
 	/*------ Constructor ------*/
     public User() {}
     
     
+	public User(
+			@NotBlank(message = "Username is required!") @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters") String userName,
+			@NotBlank(message = "Email is required!") @Email(message = "Please enter a valid email!") String email,
+			@NotBlank(message = "Password is required!") @Size(min = 8, max = 128, message = "Password must be between 8 and 128 characters") String password,
+			@NotBlank(message = "Confirm Password is required!") String confirm, List<Course> courses) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.confirm = confirm;
+		this.courses = courses;
+	}
+
 	/*------ Getters and Setters ------*/
 	public Long getId() {
 		return id;

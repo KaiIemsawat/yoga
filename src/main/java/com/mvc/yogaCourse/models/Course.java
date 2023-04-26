@@ -10,13 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="courses")
 public class Course {
 	
+
 	/*------ Variable ------*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +34,10 @@ public class Course {
     @NotBlank(message="Course name is required!")
     @Size(min=3, max=30, message="Course name must be between 3 and 30 characters")
     private String courseName;
+    
+    @NotBlank(message="Name is required!")
+    @Size(min=3, max=30, message="Name  must be between 3 and 30 characters")
+    private String instructorName;
     
     @NotBlank(message="Day is required!") // <--- might not need since it's has Sunday by default
     private String dayOfWeek;
@@ -72,19 +74,31 @@ public class Course {
 	}
 	
 	/*------ DB Setup ------*/
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "user_course",
-		joinColumns = @JoinColumn(name="course_id"),
-		inverseJoinColumns = @JoinColumn(name="user_id")
-	)
-	private List<User> users;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user; // <--- This name needs to be matched with 'mappedBy' in '@OneToMany'
 	
 	
 	/*------ Constructor ------*/
 	public Course() {}
 
 	
+	public Course(
+			@NotBlank(message = "Course name is required!") @Size(min = 3, max = 30, message = "Course name must be between 3 and 30 characters") String courseName,
+			@NotBlank(message = "Name is required!") @Size(min = 3, max = 30, message = "Name  must be between 3 and 30 characters") String instructorName,
+			@NotBlank(message = "Day is required!") String dayOfWeek,
+			@NotNull(message = "Need value input") Double price, @NotBlank(message = "Time is required!") String time,
+			@NotBlank(message = "Description is required!") @Size(min = 3, max = 400, message = "Description must be between 3 and 400 characters") String description,
+			User user) {
+		this.courseName = courseName;
+		this.instructorName = instructorName;
+		this.dayOfWeek = dayOfWeek;
+		this.price = price;
+		this.time = time;
+		this.description = description;
+		this.user = user;
+	}
+
 	/*------ Getters and Setters ------*/
 	public Long getId() {
 		return id;
@@ -143,13 +157,22 @@ public class Course {
 		return updateAt;
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
+	
+	public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
 
 	/*------ There's no need at the time being ------*/
 //	public void setCreateAt(Date createAt) {

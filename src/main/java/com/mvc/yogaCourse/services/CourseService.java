@@ -27,5 +27,10 @@ public class CourseService {
 	
 	public void deleteCourse(Long id) {
 		cRepo.deleteById(id);
-	} 
+	}
+	
+	public List<Course> notInThisUser(Long id) {
+		return cRepo.findAllByUserIdNot(id);
+	}
+	
 }
